@@ -4,8 +4,8 @@
  *  * Date: 10/06/2025
  * Class Name: DaycareManager
  * Description:
- * The DaycareManager class maintains a list of Pokemon objects and performs
- * all CRUD (Create, Read, Update, Delete) operations, as well as the custom
+ * The DaycareManager class maintains a list of Pokemon objects and does
+ * all CRUD (Create, Read, Update, Delete) operations, as well as the
  * fee calculation. It interacts with the PokemonValidator class to ensure
  * all data is valid before being added or modified.
  */
@@ -73,7 +73,14 @@ public class DaycareManager {
     public boolean updatePokemon(int id, Pokemon updated) {
         for (int i = 0; i < pokemonList.size(); i++) {
             if (pokemonList.get(i).getPokemonId() == id) {
-                if (addPokemon(updated)) {
+                // Validate before replacing
+                if (validator.isValidName(updated.getName()) &&
+                        validator.isValidType(updated.getType()) &&
+                        validator.isValidLevel(updated.getLevel()) &&
+                        validator.isValidGender(updated.getGender()) &&
+                        validator.isValidTrainerName(updated.getTrainerName()) &&
+                        validator.isValidDaysStayed(updated.getDaysStayed())) {
+
                     pokemonList.set(i, updated);
                     return true;
                 }
